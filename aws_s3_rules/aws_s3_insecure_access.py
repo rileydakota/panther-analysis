@@ -1,9 +1,9 @@
-from panther_oss_helpers import pattern_match  # pylint: disable=import-error
+from panther_base_helpers import pattern_match
 
 
 def rule(event):
     return (pattern_match(event.get('operation'), 'REST.*.OBJECT') and
-            ('ciphersuite' not in event or 'tlsVersion' not in event))
+            (not event.get('ciphersuite') or not event.get('tlsVersion')))
 
 
 def title(event):
