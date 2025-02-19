@@ -8,6 +8,7 @@ PackDefinition:
     - Standard.Asana.Audit
     - Standard.Atlassian.Audit
     - Standard.AWS.CloudTrail
+    - Standard.Azure.Audit.SignIn
     - Standard.Box.Event
     - Standard.GCP.AuditLog
     - Standard.Github.Audit
@@ -18,21 +19,24 @@ PackDefinition:
     - Standard.OnePassword.ItemUsage
     - Standard.OnePassword.SignInAttempt
     - Standard.Zendesk.AuditLog
+    - Standard.Zoom.Activity
     - Standard.Zoom.Operation
     # Standard Detections
     - Standard.AdminRoleAssigned
     - Standard.BruteForceByIP
+    - Standard.BruteForceByUser
     - Standard.ImpossibleTravel.Login
     - Standard.MFADisabled
     - Standard.NewAWSAccountCreated
     - Standard.NewUserAccountCreated
+    - Standard.SignInFromRogueState
     # Global Helpers
     - panther_base_helpers
-    - panther_default
+    - panther_aws_helpers
     - panther_config
     - panther_config_defaults
     - panther_config_overrides
     - panther_event_type_helpers
     - panther_ipinfo_helpers
     - panther_lookuptable_helpers
-    - panther_oss_helpers
+    - panther_base_helpers_old

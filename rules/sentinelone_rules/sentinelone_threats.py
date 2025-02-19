@@ -1,5 +1,3 @@
-from panther_base_helpers import deep_get
-
 NEW_THREAT_ACTIVITYTYPES = [
     19,  # New Malicious Threat Not Mitigated
     4108,  # New Malicious Threat Not Mitigated
@@ -14,9 +12,9 @@ def rule(event):
 
 def title(event):
     return (
-        f"SentinelOne - [{deep_get(event, 'data', 'confidencelevel', default='')}] level "
-        f"[{deep_get(event, 'data', 'threatclassification' ,default='')}] threat detected from "
-        f"[{deep_get(event, 'data', 'threatclassificationsource', default= '')}]."
+        f"SentinelOne - [{event.deep_get('data', 'confidencelevel', default='')}] level threat "
+        f"[{event.deep_get('data', 'filedisplayname' ,default='NO FILE NAME')}] detected on "
+        f"[{event.deep_get('data', 'computername', default= 'NO COMPUTER NAME')}]."
     )
 
 
@@ -25,9 +23,9 @@ def dedup(event):
 
 
 def severity(event):
-    if deep_get(event, "data", "confidencelevel", default="") == "malicious":
-        return "CRITICAL"
-    return "HIGH"
+    if event.deep_get("data", "confidencelevel", default="") == "malicious":
+        return "HIGH"
+    return "DEFAULT"
 
 
 def alert_context(event):

@@ -1,31 +1,34 @@
-from panther_base_helpers import aws_rule_context, deep_get
+from panther_aws_helpers import aws_cloudtrail_success, aws_rule_context
 
 PROFILE_EVENTS = {
     "UpdateLoginProfile",
     "CreateLoginProfile",
+    "DeleteLoginProfile",
 }
 
 
 def rule(event):
     # Only look for successes
-    if event.get("errorCode") or event.get("errorMessage"):
+    if not aws_cloudtrail_success(event):
         return False
 
     # Check when someone other than the user themselves creates or modifies a login profile
+    # with no password reset needed
     return (
         event.get("eventSource", "") == "iam.amazonaws.com"
         and event.get("eventName", "") in PROFILE_EVENTS
-        and not deep_get(event, "userIdentity", "arn", default="").endswith(
-            f"/{deep_get(event, 'requestParameters', 'userName', default='')}"
+        and not event.deep_get("requestParameters", "passwordResetRequired", default=False)
+        and not event.deep_get("userIdentity", "arn", default="").endswith(
+            f"/{event.deep_get('requestParameters', 'userName', default='')}"
         )
     )
 
 
 def title(event):
     return (
-        f"[{deep_get(event, 'userIdentity', 'arn')}] "
+        f"[{event.deep_get('userIdentity', 'arn')}] "
         f"changed the password for "
-        f"[{deep_get(event, 'requestParameters','userName')}]"
+        f"[{event.deep_get('requestParameters','userName')}]"
     )
 
 

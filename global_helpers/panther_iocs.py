@@ -1,5 +1,6 @@
 # pylint: disable=line-too-long
 
+import panther_base_helpers
 
 # Example sources:
 # - https://www.fastly.com/blog/new-data-and-insights-into-log4shell-attacks-cve-2021-44228
@@ -540,22 +541,13 @@ XZ_AMIS = {
 }
 
 
-# IOC Helper functions:
 def ioc_match(indicators: list, known_iocs: set) -> list:
-    """Matches a set of indicators against known Indicators of Compromise
-
-    :param indicators: List of potential indicators of compromise
-    :param known_iocs: Set of known indicators of compromise
-    :return: List of any indicator matches
-    """
-    # Check through the IP IOCs
-    return [ioc for ioc in (indicators or []) if ioc in known_iocs]
+    """Global `ioc_match` is DEPRECATED.
+    Instead, use `from panther_base_helpers import ioc_match`."""
+    return panther_base_helpers.ioc_match(indicators, known_iocs)
 
 
 def sanitize_domain(domain: str) -> str:
-    """Makes a potential malicious domain not render as a domain in most systems
-
-    :param domain: Original domain
-    :return: Sanitized domain
-    """
-    return domain.replace(".", "[.]")
+    """Global `sanitize_domain` is DEPRECATED.
+    Instead, use `from panther_base_helpers import defang_ioc`."""
+    return panther_base_helpers.defang_ioc(domain)

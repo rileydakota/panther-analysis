@@ -8,15 +8,13 @@ PackDefinition:
     - Standard.GCP.AuditLog
     # Rules
     - GCP.K8s.New.Daemonset.Deployed
-    - GCP.K8S.Pot.Create.Or.Modify.Host.Path.Volume.Mount
+    - GCP.K8S.Pod.Create.Or.Modify.Host.Path.Volume.Mount
     - GCP.K8S.Privileged.Pod.Created
     - GCP.K8S.Service.Type.NodePort.Deployed
     - GCP.K8s.IOC.Activity
     - GCP.K8s.Pod.Attached.To.Node.Host.Network
     - GCP.K8s.Pod.Using.Host.PID.Namespace
     # Globals
-    - gcp_base_helpers
+    - panther_gcp_helpers
     - panther_base_helpers
-    - panther_config
-    - panther_config_defaults
-    - panther_config_overrides
+    - panther_base_helpers_old
